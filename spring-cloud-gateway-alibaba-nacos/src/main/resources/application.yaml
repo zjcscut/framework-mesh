@@ -1,0 +1,22 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: spring-cloud-gateway-alibaba-nacos
+  cloud:
+    nacos:
+      discovery:
+        enabled: true
+        server-addr: 'localhost:8848'
+    gateway:
+      routes:
+        - id: sofa-rpc-provider
+          uri: 'lb://club.throwable.contract.HelloService:rest'
+          predicates:
+            - Path=/club.throwable.contract.HelloService/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+

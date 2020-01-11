@@ -18,8 +18,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {"club.throwable.client", "club.throwable.contract"})
 public class ClientApplication implements CommandLineRunner {
 
-    @SofaReference(binding = @SofaReferenceBinding(bindingType = "bolt"))
-    private HelloService helloService;
+//    @SofaReference(binding = @SofaReferenceBinding(bindingType = "bolt"))
+//    private HelloService boltHelloService;
+
+    @SofaReference(binding = @SofaReferenceBinding(bindingType = "rest"))
+    private HelloService restHelloService;
 
     public static void main(String[] args) {
         SpringApplication.run(ClientApplication.class, args);
@@ -27,6 +30,7 @@ public class ClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("调用HelloService#sayHello(),结果:{}", helloService.sayHello("throwable"));
+//        log.info("Bolt调用HelloService#sayHello(),结果:{}", boltHelloService.sayHello("throwable"));
+        log.info("Rest调用HelloService#sayHello(),结果:{}", restHelloService.sayHello("throwable"));
     }
 }

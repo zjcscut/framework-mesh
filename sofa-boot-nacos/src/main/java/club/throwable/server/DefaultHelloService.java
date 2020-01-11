@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
  * @since 2019/12/31 14:51
  */
 @Service
-@SofaService(interfaceType = HelloService.class, bindings = {
-        @SofaServiceBinding(bindingType = "bolt")
+@SofaService(
+        interfaceType = HelloService.class, bindings = {
+        @SofaServiceBinding(bindingType = "bolt"),
+        @SofaServiceBinding(bindingType = "rest")
 })
 public class DefaultHelloService implements HelloService {
 

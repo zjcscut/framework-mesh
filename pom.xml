@@ -9,6 +9,9 @@
         <module>spring-boot-nacos</module>
         <module>redisson-sample</module>
         <module>sofa-boot-nacos</module>
+        <module>spring-mvc-encrypt-params</module>
+        <module>java-native-lib-jna</module>
+        <module>spring-cloud-gateway-alibaba-nacos</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
