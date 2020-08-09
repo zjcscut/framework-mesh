@@ -13,6 +13,8 @@
         <module>java-native-lib-jna</module>
         <module>spring-cloud-gateway-alibaba-nacos</module>
         <module>rabbit-transactional-message</module>
+        <module>simple-spring-boot-project</module>
+        <module>java-snowflake</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>

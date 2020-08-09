@@ -30,3 +30,16 @@ CREATE TABLE `t_transactional_message_content`
     message_id BIGINT UNSIGNED NOT NULL COMMENT '事务消息记录ID',
     content    TEXT COMMENT '消息内容'
 ) COMMENT '事务消息内容表';
+
+# 下面的是例子中的表
+CREATE TABLE `t_order`
+(
+    id          BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    create_time DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    edit_time   DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    user_id     BIGINT UNSIGNED NOT NULL COMMENT '用户ID',
+    order_id    VARCHAR(64)     NOT NULL COMMENT '订单ID',
+    amount      DECIMAL(12, 2)  NOT NULL DEFAULT 0 COMMENT '订单金额',
+    INDEX idx_user_id (user_id),
+    UNIQUE uniq_order_id (order_id)
+) COMMENT '订单表';

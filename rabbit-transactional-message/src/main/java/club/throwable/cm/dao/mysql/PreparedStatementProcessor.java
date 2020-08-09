@@ -9,6 +9,7 @@ import java.sql.SQLException;
  * @description
  * @since 2020/2/5 11:51
  */
+@FunctionalInterface
 public interface PreparedStatementProcessor {
 
     void process(PreparedStatement ps) throws SQLException;
