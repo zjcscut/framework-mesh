@@ -15,6 +15,7 @@
         <module>rabbit-transactional-message</module>
         <module>simple-spring-boot-project</module>
         <module>java-snowflake</module>
+        <module>circuit-breaker</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
