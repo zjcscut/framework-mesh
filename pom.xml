@@ -16,6 +16,8 @@
         <module>simple-spring-boot-project</module>
         <module>java-snowflake</module>
         <module>circuit-breaker</module>
+        <module>curator-leader-select</module>
+        <module>bit-array-switch</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
