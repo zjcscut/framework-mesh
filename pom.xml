@@ -18,6 +18,7 @@
         <module>circuit-breaker</module>
         <module>curator-leader-select</module>
         <module>bit-array-switch</module>
+        <module>sofa-bolt-demo</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
