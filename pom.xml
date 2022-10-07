@@ -19,6 +19,7 @@
         <module>curator-leader-select</module>
         <module>bit-array-switch</module>
         <module>sofa-bolt-demo</module>
+        <module>tomcat-virtual-thread</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
