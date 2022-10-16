@@ -20,6 +20,7 @@
         <module>bit-array-switch</module>
         <module>sofa-bolt-demo</module>
         <module>tomcat-virtual-thread</module>
+        <module>ulid4j</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
