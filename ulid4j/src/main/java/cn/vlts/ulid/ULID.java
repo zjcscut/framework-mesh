@@ -1,6 +1,7 @@
 package cn.vlts.ulid;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -176,8 +177,34 @@ public class ULID implements Serializable, Comparable<ULID> {
         return this.lsb;
     }
 
+    /**
+     * Get the timestamp component of ULID
+     *
+     * @return the timestamp component
+     */
     public long getTimestamp() {
         return this.msb >>> 16;
+    }
+
+    /**
+     * Get the randomness component of ULID
+     *
+     * @return the randomness component
+     */
+    public byte[] getRandomness() {
+        byte[] randomness = new byte[RANDOMNESS_BYTE_LEN];
+        // 这里不需要& 0xff，因为多余的位会被截断
+        randomness[0x0] = (byte) (this.msb >>> 8);
+        randomness[0x1] = (byte) this.msb;
+        randomness[0x2] = (byte) (this.lsb >>> 56);
+        randomness[0x3] = (byte) (this.lsb >>> 48);
+        randomness[0x4] = (byte) (this.lsb >>> 40);
+        randomness[0x5] = (byte) (this.lsb >>> 32);
+        randomness[0x6] = (byte) (this.lsb >>> 24);
+        randomness[0x7] = (byte) (this.lsb >>> 16);
+        randomness[0x8] = (byte) (this.lsb >>> 8);
+        randomness[0x9] = (byte) this.lsb;
+        return randomness;
     }
 
     public ULID increment() {
@@ -194,6 +221,12 @@ public class ULID implements Serializable, Comparable<ULID> {
         return toCanonicalString(DEFAULT_ALPHABET);
     }
 
+    /**
+     * Format ULID to canonical string with given alphabet
+     *
+     * @param alphabet alphabet
+     * @return canonical string
+     */
     public String toCanonicalString(char[] alphabet) {
         char[] chars = new char[ULID_CHAR_LEN];
         long timestamp = this.msb >> 16;
@@ -231,6 +264,32 @@ public class ULID implements Serializable, Comparable<ULID> {
         return new String(chars);
     }
 
+    /**
+     * Format ULID to canonical string with default alphabet. Use 'formatUnsignedLong0' from Long.formatUnsignedLong0()
+     *
+     * @return canonical string
+     */
+    public String toCanonicalString0() {
+        byte[] bytes = new byte[ULID_CHAR_LEN];
+        formatUnsignedLong0(this.lsb & 0xffffffffffL, 5, bytes, 18, 8);
+        formatUnsignedLong0(((this.msb & 0xffffL) << 24) | (this.lsb >>> 40), 5, bytes, 10, 8);
+        formatUnsignedLong0(this.msb >> 16, 5, bytes, 0, 10);
+        return new String(bytes, StandardCharsets.US_ASCII);
+    }
+
+    /**
+     * Copy from java.lang.Long.formatUnsignedLong0()
+     */
+    private static void formatUnsignedLong0(long val, int shift, byte[] buf, int offset, int len) {
+        int charPos = offset + len;
+        long radix = 1L << shift;
+        long mask = radix - 1;
+        do {
+            buf[--charPos] = (byte) DEFAULT_ALPHABET[(int) (val & mask)];
+            val >>>= shift;
+        } while (charPos > offset);
+    }
+
     @Override
     public int compareTo(ULID o) {
         int mostSigBits = Long.compare(this.msb, o.msb);
@@ -239,10 +298,16 @@ public class ULID implements Serializable, Comparable<ULID> {
 
     @Override
     public boolean equals(Object obj) {
-        if ((null == obj) || (obj.getClass() != ULID.class))
+        if ((Objects.isNull(obj)) || (obj.getClass() != ULID.class)) {
             return false;
+        }
         ULID id = (ULID) obj;
         return (this.msb == id.msb && this.lsb == id.lsb);
+    }
+
+    @Override
+    public int hashCode() {
+        return Long.hashCode(this.msb ^ this.lsb);
     }
 
     /**

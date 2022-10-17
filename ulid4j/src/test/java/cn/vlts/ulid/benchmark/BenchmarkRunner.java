@@ -52,6 +52,11 @@ public class BenchmarkRunner {
     }
 
     @Benchmark
+    public String createULIDToCanonicalString0() {
+        return ULID.ulid().toCanonicalString0();
+    }
+
+    @Benchmark
     public ULID createMonotonicULID() {
         return SPI.next();
     }
