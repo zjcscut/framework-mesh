@@ -21,6 +21,7 @@
         <module>sofa-bolt-demo</module>
         <module>tomcat-virtual-thread</module>
         <module>ulid4j</module>
+        <module>rabbitmq-rocketmq-demo</module>
     </modules>
     <packaging>pom</packaging>
     <name>framework-mesh</name>
